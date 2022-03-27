@@ -1,1 +1,28 @@
-<h1>Hello World</h1>
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Новини</h1>
+
+{% if user.is_authenticated %}
+
+{% for post in object_list %}
+
+<div>
+    <a href="{% url 'article' post.pk %}">{{ post.title }}</a>
+    <div>
+        {{ post.body }}
+        {{ post.author.first_name }} {{ post.author.last_name }}
+    </div>
+</div>
+
+{% endfor %}
+
+{% else %}
+
+<div>Неавторизовані користувачі не можуть переглядати новини. Увійдіть або зареєструтесь, будь ласка.</div>
+
+{% endif %}
+
+
+{% endblock %}

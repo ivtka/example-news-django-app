@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ post.title }} {% endblock %}
+
+{% block content %}
+
+<h1>{{ post.title }}</h1>
+<small>Від {{ post.author.first_name }} {{ post.author.last_name }}</small>
+
+<br />
+<a href="{% url 'home' %}" class="btn btn-secondary">На головну</a>
+
+<div>
+    <hr />
+    <h2>Коментарі</h2>
+    {% if not post.comments.all %}
+    Немає коментарів <a href="{% url 'add_comment' post.pk %}">Додати</a>
+    {% else %}
+    <br>
+    {% for comment in post.comments.all %}
+    <strong>
+        {{ comment.name }} - {{ comment.date_added }}
+    </strong>
+    <br />
+    {{ comment.body }}
+    <hr />
+    {% endfor %}
+    {% endif %}
+
+    <br>
+    <a href="{% url 'add_comment' post.pk %}">Додати коментар</a>
+    <br>
+</div>
+
+{% endblock %}
